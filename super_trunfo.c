@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <string.h> /* Adicionado a inclusão desta biblioteca afim de utilizar
+a função:  "strcspn"
+*/ 
+
 
 int main() {
     // Variáveis Carta 01
-    char estado1;
+    char estado1[4];
     char codigo1[4];
     char cidade1[50];
     int populacao1;
@@ -11,7 +15,7 @@ int main() {
     int pontosTuristicos1;
 
     // Variáveis Carta 2
-    char estado2;
+    char estado2[4];
     char codigo2[4];
     char cidade2[50];
     int populacao2;
@@ -22,16 +26,19 @@ int main() {
     // Entrada de dados da Carta 1
     printf("Digite os dados da Carta 1:\n");
 
-    printf("Estado (A-H): ");
-    scanf(" %c", &estado1);
+    printf("Digite a sigla do Estado ex: (SP): ");
+    scanf(" %s", estado1);
 
     printf("Codigo da Carta (ex: A01): ");
     scanf("%s", codigo1);
 
     getchar();
     printf("Nome da Cidade: ");
-    fgets(cidade1,sizeof(cidade1), stdin); // Lê nome com espaços
-
+    fgets(cidade1,sizeof(cidade1), stdin); // Armazena os dados com espaços
+    cidade1[strcspn(cidade1, "\n")] = '\0'; /* Retira a quebra de Linha -
+    Gerada pela função: Fgest, permitindo na impressão dos dados a linha
+    correta
+    */
     printf("Populacao: ");
     scanf("%d", &populacao1);
 
@@ -47,8 +54,8 @@ int main() {
     // Entrada de dados da Carta 2
     printf("\nDigite os dados da Carta 2:\n");
 
-    printf("Estado (A-H): ");
-    scanf(" %c", &estado2);
+    printf("Digite a sigla do Estado ex:(SP): ");
+    scanf(" %s", estado2);
 
     printf("Codigo da Carta (ex: B02): ");
     scanf("%s", codigo2);
@@ -56,6 +63,10 @@ int main() {
     getchar();
     printf("Nome da Cidade: ");
     fgets(cidade2,sizeof(cidade2), stdin); // Lê nome com espaços
+    cidade2[strcspn(cidade2, "\n")] = '\0'; /* Retira a quebra de Linha -
+    Gerada pela função: Fgest, permitindo na impressão dos dados a linha
+    correta
+    */
 
     printf("Populacao: ");
     scanf("%d", &populacao2);
@@ -82,6 +93,8 @@ int main() {
     float super_poder2 = populacao2 + area2 + pib2 + pontosTuristicos2 + pib_per_capita2 + (1.0 / densidade2);
 
     // Exibição dos dados das Cartas 
+    /* Deixei apagado devido a atualização do programa, no qual não tem essa necessidade ( eu acho )
+
     printf("\nCarta 1:\n");
     printf("Estado: %c\n", estado1);
     printf("Codigo: %s\n", codigo1);
@@ -99,10 +112,29 @@ int main() {
     printf("Area: %.2f km\n", area2);
     printf("PIB: %.2f bilhoes de reais\n", pib2);
     printf("Numero de Pontos Turisticos: %d\n", pontosTuristicos2);
+    */
 
     // Comparação dos atributos
-    printf("\nComparacao de Cartas:\n");
+    // Comparação de atributos versão 2.0 será comparado somente a população
 
+    printf("\nComparacao dos Poderes totais das Cartas:\n");
+    printf("Carta 1 -%s (%s):%.2f PONTOS!!\n", cidade1,estado1,super_poder1);
+    printf("Carta 2 -%s (%s):%.2f PONTOS!!\n", cidade2,estado2,super_poder2);
+    
+    if (super_poder1 > super_poder2) {
+        printf("Resultado: Carta 1: %s venceu!\n", cidade1);
+    }  else{  
+        printf("Resultado: Carta 2 %s venceu!\n", cidade2);
+    }
+
+
+
+
+
+
+
+
+    /* Oculto o codigo da primeira versão. Segunda versão com o foco no resultado do Super poder!
     // Comparando População
     printf("Populacao: %s venceu (%d)\n", (populacao1 > populacao2) ? "Carta 1" : "Carta 2", (populacao1 > populacao2));
 
@@ -123,7 +155,7 @@ int main() {
 
     // Comparando Super Poder
     printf("Super Poder: %s venceu (%d)\n", (super_poder1 > super_poder2) ? "Carta 1" : "Carta 2", (super_poder1 > super_poder2));
-
+    */
 
     return 0;
 }
